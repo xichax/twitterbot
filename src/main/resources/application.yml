@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: twitterbot
+  ai:
+    huggingface:
+      chat:
+        url: https://api-inference.huggingface.co/models/
+        api-key: ${HUGGINGFACE_API_KEY}
+        enabled: true
+
+twitter:
+  apiKey: ${TWITTER_API_KEY}
+  apiSecretKey: ${TWITTER_API_SECRET_KEY}
+  accessToken: ${TWITTER_ACCESS_TOKEN}
+  accessTokenSecret: ${TWITTER_ACCESS_TOKEN_SECRET}
+  bearerToken: ${TWITTER_BEARER_TOKEN}
+
+
