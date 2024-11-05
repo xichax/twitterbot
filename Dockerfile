@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the build.gradle and settings.gradle files
-COPY build.gradle gradle.properties ./
+COPY build.gradle gradle-wrapper.properties ./
 COPY src ./src
 
 # Download the dependencies and build the application
