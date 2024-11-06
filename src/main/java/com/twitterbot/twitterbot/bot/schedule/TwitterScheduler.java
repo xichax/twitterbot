@@ -35,14 +35,15 @@ public class TwitterScheduler {
         String zodiacSign = ZODIAC_SIGNS[RANDOM.nextInt(ZODIAC_SIGNS.length)];
 
         return String.format(
-                "Generate a sentence about the zodiac sign %s in no more than 9 words. " +
-                "Example: %s. It should be funny and sarcastic. " +
-                "Should be something that happens to many people.",
-                zodiacSign, example
+                "Generate a sentence about the zodiac sign %s in 9 words. " +
+                "Example: %s. It should be funny and sarcastic " +
+                "and should be like something that happens to many people." +
+                "Don't forget to mention the zodiac sign, %s.",
+                zodiacSign, example, zodiacSign
         );
     }
 
-    @Scheduled(fixedRate = 2*60*1000)
+    @Scheduled(fixedRate = 10*60*1000)
     public void tweetEveryHour() {
         String request = generateUniquePrompt();
         String response = huggingFaceService.getHuggingResponse(request).block();
