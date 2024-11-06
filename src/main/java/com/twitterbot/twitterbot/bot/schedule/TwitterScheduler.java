@@ -44,6 +44,7 @@ public class TwitterScheduler {
     }
 
     @Scheduled(fixedRate = 10*60*1000)
+//    @Scheduled(cron = "0 25 * * * ?")
     public void tweetEveryHour() {
         String request = generateUniquePrompt();
         String response = huggingFaceService.getHuggingResponse(request).block();
