@@ -42,7 +42,7 @@ public class TwitterScheduler {
         );
     }
 
-    @Scheduled(cron = "0 9 * * * *")
+    @Scheduled(fixedRate = 45*60*1000)
     public void tweetEveryHour() {
         String request = generateUniquePrompt();
         String response = huggingFaceService.getHuggingResponse(request).block();
