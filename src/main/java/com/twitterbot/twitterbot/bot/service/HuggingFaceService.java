@@ -25,7 +25,9 @@ public class HuggingFaceService {
     private WebClient webClient;
 
     private static final List<String> MODELS = List.of(
-            "meta-llama/Llama-3.2-1B-Instruct"
+            "mistralai/Mistral-7B-Instruct-v0.2",
+            "mistralai/Mixtral-8x7B-Instruct-v0.1"
+//            "meta-llama/Llama-3.2-1B-Instruct"
     );
 
     private static final Random RANDOM = new Random();
