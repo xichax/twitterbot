@@ -24,27 +24,26 @@ public class TwitterScheduler {
             "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
     };
     private static final String[] EXAMPLES = {
-            "Gemini...Nah, you cant do that",
-            "Libra, you are going to break your smartphone today",
-            "Baggy is not for you Sagittarius,",
+            "...nah, you cant do that.",
+            ", you are going to break your smartphone today.",
+            ", baggy is not for you.",
     };
     private static final Random RANDOM = new Random();
+
 
     public static String generateUniquePrompt() {
         String example = EXAMPLES[RANDOM.nextInt(EXAMPLES.length)];
         String zodiacSign = ZODIAC_SIGNS[RANDOM.nextInt(ZODIAC_SIGNS.length)];
 
         return String.format(
-                "Generate a sentence about the zodiac sign %s in 9 words. " +
-                "Example: %s. It should be funny and sarcastic " +
-                "and should be like something that happens to many people." +
-                "Don't forget to mention the zodiac sign, %s.",
-                zodiacSign, example, zodiacSign
+                "Generate a funny and sarcastic 9-word sentence about the zodiac sign %s." +
+                " The sentence should describe a relatable situation that happens to many people and must mention '%s'." +
+                "' Example: Libra, %s.",
+                zodiacSign, zodiacSign, example
         );
     }
 
-    @Scheduled(fixedRate = 10*60*1000)
-//    @Scheduled(cron = "0 25 * * * ?")
+    @Scheduled(cron = "0 45 * * * ?")
     public void tweetEveryHour() {
         String request = generateUniquePrompt();
         String response = huggingFaceService.getHuggingResponse(request).block();
