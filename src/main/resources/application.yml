@@ -15,4 +15,5 @@ twitter:
   accessTokenSecret: ${TWITTER_ACCESS_TOKEN_SECRET}
   bearerToken: ${TWITTER_BEARER_TOKEN}
 
-
+server:
+  port: ${PORT:10000}
