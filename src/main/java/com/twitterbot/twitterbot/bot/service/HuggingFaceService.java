@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -52,7 +54,10 @@ public class HuggingFaceService {
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(this::extractContentFromResponse)
-                .doOnSuccess(response -> System.out.println("Final response: " + response));
+                .doOnSuccess(response -> System.out.println("Final response: " + response))
+                .retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+                .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) ->
+                        new RuntimeException("Failed after multiple retries", retrySignal.failure())));
     }
 
     private String extractContentFromResponse(String response) {
@@ -61,7 +66,8 @@ public class HuggingFaceService {
             JsonNode jsonNode = objectMapper.readTree(response);
             JsonNode choicesNode = jsonNode.path("choices");
             if (choicesNode.isArray() && choicesNode.size() > 0) {
-                return choicesNode.get(0).path("message").path("content").asText("");
+                String content = choicesNode.get(0).path("message").path("content").asText("");
+                return content.replaceAll("\\(.*?\\)", "").trim();
             }
         } catch (Exception e) {
             e.printStackTrace();
